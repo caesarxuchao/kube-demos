@@ -4,7 +4,8 @@
 
 desc "Run some pods under a replication controller"
 run "kubectl --namespace=demos run hostnames \\
-    --image=gcr.io/google_containers/serve_hostname:1.1 --replicas=5"
+    --image=gcr.io/google_containers/serve_hostname:1.1 --replicas=5 \\
+    --generator=run/v1"
 
 desc "Look what I made!"
 run "kubectl --namespace=demos describe rc hostnames"
