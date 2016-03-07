@@ -36,6 +36,8 @@ function run() {
     eval "$1"
     r=$?
     read -d '' -t 0.1 -n 10000 # clear stdin
+    # On OS X -t can only be followed by integer.
+    # read -d '' -t 1 -n 10000 # clear stdin
     prompt
     if [ -z "$DEMO_AUTO_RUN" ]; then
       read -s
