@@ -2,18 +2,18 @@
 
 . $(dirname ${BASH_SOURCE})/../util.sh
 
-if kubectl --namespace=demos get rc hostnames >/dev/null 2>&1; then
-    desc "Revisit our replication controller"
-    run "kubectl --namespace=demos get rc hostnames"
+if kubectl --namespace=demos get rs hostnames >/dev/null 2>&1; then
+    desc "Revisit our replica set"
+    run "kubectl --namespace=demos get rs hostnames"
 else
-    desc "Run some pods under a replication controller"
-    run "kubectl --namespace=demos run hostnames \\
-        --image=gcr.io/google_containers/serve_hostname:1.1 --replicas=5"
+    desc "Run some pods under a replication set"
+    run "cat $(relative ../replicasets/rs.yaml)"
+    run "kubectl --namespace=demos create -f $(relative ../replicasets/rs.yaml)"
 fi
 
-desc "Expose the RC as a service"
-run "kubectl --namespace=demos expose rc hostnames \\
-    --port=80 --target-port=9376"
+desc "Create a service to front the replicaset"
+    run "cat $(relative service.yaml)"
+    run "kubectl --namespace=demos create -f $(relative service.yaml)"
 
 desc "Have a look at the service"
 run "kubectl --namespace=demos describe svc hostnames"
